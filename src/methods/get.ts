@@ -3,7 +3,6 @@ import { users } from "../database/users.js";
 import { validate } from 'uuid';
 import { sendResponse } from "../sendResponse.js";
 import { getUserById } from "../database/getUserById.js";
-import { validate as uuidValidate } from 'uuid';
 
 export const getRequest = async (response: ServerResponse) => {
   response.statusCode = 200;
@@ -14,7 +13,7 @@ export const getRequest = async (response: ServerResponse) => {
 export const getRequestByUserId = async (response: ServerResponse, url: string) => {
   const id = url.split('/').pop();
 
-  if (!id || !uuidValidate(id)) {
+  if (!id || !validate(id)) {
     sendResponse(response, 400, { message: 'Invalid user ID' })
   }
 
