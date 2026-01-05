@@ -1,7 +1,7 @@
 import { IncomingMessage, ServerResponse } from "node:http";
 import { users } from "../database/users.js";
-import { v4 as uuidv4 } from "uuid";
-import { sendResponse } from "../sendResponse.js";
+import { v4 } from "uuid";
+import { sendResponse } from "../utils/sendResponse.js";
 
 export const postRequest = async (request: IncomingMessage, response: ServerResponse) => {
   let body = ""
@@ -15,7 +15,7 @@ export const postRequest = async (request: IncomingMessage, response: ServerResp
       return;
     }
 
-    const newUser = { id: uuidv4(), username, age, hobbies };
+    const newUser = { id: v4(), username, age, hobbies };
     await users.push(newUser);
     sendResponse(response, 201, newUser);
   });

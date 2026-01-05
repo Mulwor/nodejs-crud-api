@@ -1,8 +1,7 @@
 import { ServerResponse } from "node:http";
 import { users } from "../database/users.js";
 import { validate } from 'uuid';
-import { sendResponse } from "../sendResponse.js";
-import { getUserById } from "../database/getUserById.js";
+import { sendResponse } from "../utils/sendResponse.js";
 
 export const getRequest = async (response: ServerResponse) => {
   response.statusCode = 200;
@@ -17,7 +16,7 @@ export const getRequestByUserId = async (response: ServerResponse, url: string) 
     sendResponse(response, 400, { message: 'Invalid user ID' })
   }
 
-  const user = await getUserById(id);
+  const user = users.find((user) => user.id === id);
   if (!user) {
     return sendResponse(response, 404, { message: 'User does not exist. Try find another user' });
   }

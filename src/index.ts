@@ -2,7 +2,7 @@ import http from 'http';
 import { getRequest, getRequestByUserId } from './methods/get.js';
 import { postRequest } from './methods/post.js';
 
-const requestURL = '/api/users';
+const endpoint = '/api/users';
 
 const server = http.createServer(async (request, response) => {
   const method = request.method || "";
@@ -11,17 +11,17 @@ const server = http.createServer(async (request, response) => {
   response.setHeader('Content-Type', 'application/json');
 
   // http://localhost:3000/api/users
-  if (method === 'GET' && url === requestURL) {
+  if (method === 'GET' && url === endpoint) {
     getRequest(response);
   }
 
   // http://localhost:3000/api/users/{userId}
-  if (method === 'GET' && url.startsWith(`${requestURL}/`)) {
+  if (method === 'GET' && url.startsWith(`${endpoint}/`)) {
     getRequestByUserId(response, url);
   }
 
   // http://localhost:3000/api/users
-  if (method === 'POST' && url === requestURL) {
+  if (method === 'POST' && url === endpoint) {
     postRequest(request, response);
   }
 });
