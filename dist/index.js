@@ -2,6 +2,11 @@ import http from 'http';
 import { getRequest, getRequestByUserId } from './methods/get.js';
 import { postRequest } from './methods/post.js';
 import { putRequest } from './methods/put.js';
+import { removeRequest } from './methods/delete.js';
+import dotenv from 'dotenv';
+dotenv.config();
+console.log(dotenv.config());
+const PORT = process.env.PORT || 3000;
 const server = http.createServer(async (request, response) => {
     const method = request.method || "";
     const url = request.url || "";
@@ -24,5 +29,11 @@ const server = http.createServer(async (request, response) => {
     if (method === 'PUT' && hasMainEndpoint) {
         putRequest(request, response, url);
     }
+    // http://localhost:3000/api/users/{userId}
+    if (method === 'DELETE' && hasMainEndpoint) {
+        removeRequest(response, url);
+    }
 });
-server.listen(3000);
+server.listen(PORT, () => {
+    console.log(`Server start work on http://localhost:${PORT}`);
+});
