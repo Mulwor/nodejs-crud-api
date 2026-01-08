@@ -8,13 +8,11 @@
 
 3\. Then install dependencies - `npm i` or `npm install`;
 
-4\. Write something about env;
+4\. Create .env like .env.example: `cp .env.example .env`;
 
 5\. We have 2 modes: 
  - `npm run start:dev` for development mode;
  - `npm run start:prod` for product mode;
-
-6\. Maybe i make cluster, but i am not sure
 
 ---
 

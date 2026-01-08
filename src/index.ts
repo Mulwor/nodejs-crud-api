@@ -4,6 +4,7 @@ import { postRequest } from './methods/post.js';
 import { putRequest } from './methods/put.js';
 import { removeRequest } from './methods/delete.js';
 import dotenv from 'dotenv';
+import { sendResponse } from './utils/sendResponse.js';
 
 dotenv.config();
 const PORT = process.env.PORT || 3000;
@@ -18,28 +19,30 @@ const server = http.createServer(async (request, response) => {
 
   // http://localhost:3000/api/users
   if (method === 'GET' && url === mainEndpoint) {
-    getRequest(response);
+    return getRequest(response);
   }
 
   // http://localhost:3000/api/users/{userId}
   if (method === 'GET' && hasMainEndpoint) {
-    getRequestByUserId(response, url);
+    return getRequestByUserId(response, url);
   }
 
   // http://localhost:3000/api/users
   if (method === 'POST' && url === mainEndpoint) {
-    postRequest(request, response);
+    return postRequest(request, response);
   }
 
   // http://localhost:3000/api/users/{userId}
   if (method === 'PUT' && hasMainEndpoint) {
-    putRequest(request, response, url);
+    return putRequest(request, response, url);
   }
 
   // http://localhost:3000/api/users/{userId}
   if (method === 'DELETE' && hasMainEndpoint) {
-    removeRequest(response, url);
+    return removeRequest(response, url);
   }
+
+  return sendResponse(response, 404, { message: 'Endpoint not found' });
 });
 
 server.listen(PORT, () => {
